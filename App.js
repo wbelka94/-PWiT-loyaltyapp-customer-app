@@ -1,6 +1,6 @@
 import React from 'react';
 import HomeScreen from "./screens/HomeScreen";
-import SecondScreen from "./screens/SecondScreen";
+import MyPointsScreen from "./screens/MyPointsScreen";
 import createDrawerNavigator from "react-navigation/src/navigators/createDrawerNavigator";
 
 const App = createDrawerNavigator ({
@@ -10,7 +10,7 @@ const App = createDrawerNavigator ({
     },
     Second: {
          path: '/home/second',
-         screen: SecondScreen
+         screen: MyPointsScreen
     },
     // AddVehicle: {
     //     path: 'home/addVehicle',

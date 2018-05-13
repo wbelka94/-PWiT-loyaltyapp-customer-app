@@ -9,11 +9,10 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Header} from "react-native-elements";
 import QRCode from 'react-native-qrcode';
 
-
 export default class HomeScreen extends Component{
     static navigationOptions = {
-        title: 'Home',
-        tabBarLabel: 'Home',
+        title: 'Moja karta',
+        tabBarLabel: 'Moja karta',
     };
 
     constructor(){
