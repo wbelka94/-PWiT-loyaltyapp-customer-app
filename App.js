@@ -1,21 +1,27 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import HomeScreen from "./screens/HomeScreen";
+import SecondScreen from "./screens/SecondScreen";
+import createDrawerNavigator from "react-navigation/src/navigators/createDrawerNavigator";
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const App = createDrawerNavigator ({
+    Home: {
+        path: '/home',
+        screen: HomeScreen,
+    },
+    Second: {
+         path: '/home/second',
+         screen: SecondScreen
+    },
+    // AddVehicle: {
+    //     path: 'home/addVehicle',
+    //     screen: VehicleFormScreen
+    // }
+},{
+    initialRouteName: 'Home',
+    drawerPosition: 'right',
+    navigationOptions: {
+        headerMode: 'none',
+    }
 });
+
+export default App;
