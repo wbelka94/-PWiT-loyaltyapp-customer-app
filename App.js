@@ -1,6 +1,7 @@
 import React from 'react';
 import HomeScreen from "./screens/HomeScreen";
 import MyPointsScreen from "./screens/MyPointsScreen";
+import CompanyScreen from "./screens/CompanyScreen";
 import createDrawerNavigator from "react-navigation/src/navigators/createDrawerNavigator";
 
 const App = createDrawerNavigator ({
@@ -8,14 +9,14 @@ const App = createDrawerNavigator ({
         path: '/home',
         screen: HomeScreen,
     },
-    Second: {
-         path: '/home/second',
+    MyPoints: {
+         path: '/home/my-points',
          screen: MyPointsScreen
     },
-    // AddVehicle: {
-    //     path: 'home/addVehicle',
-    //     screen: VehicleFormScreen
-    // }
+    Company: {
+        path: 'home/my-points/company',
+        screen: CompanyScreen
+    }
 },{
     initialRouteName: 'Home',
     drawerPosition: 'right',

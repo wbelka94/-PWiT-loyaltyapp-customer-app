@@ -7,29 +7,28 @@ import {
 } from 'react-native';
 
 import {Header} from "react-native-elements";
+import Hidden from "../components/Hidden";
 
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-export default class MyPointsScreen extends Component{
+export default class CompanyScreen extends Component{
     static navigationOptions = {
-        title: 'Moje punkty',
+        drawerLabel: <Hidden/>
     };
 
-    constructor() {
-        super();
-
+    constructor(props) {
+        super(props);
+        console.log(props.navigation.state.params.company);
         this.state = {
-            customer:{
-                id: 1,
-            },
+            company: props.navigation.state.params.company,
             dataSource: ds.cloneWithRows([])
         };
-        this.getPointsByCompanyFromApiAsync();
+        this.getCouponsForCompanyFromApiAsync();
     }
 
-    getPointsByCompanyFromApiAsync() {
-        return fetch('http://loyaltyapp.fb-chn.pl/customers/' + this.state.customer.id + '/pointsByCompany', {
+    getCouponsForCompanyFromApiAsync() {
+        return fetch('http://loyaltyapp.fb-chn.pl/coupons?filter[company]=' + this.state.company.id, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -46,6 +45,8 @@ export default class MyPointsScreen extends Component{
             });
     }
 
+
+
     render(){
         const { navigate } = this.props.navigation;
         return (
@@ -54,9 +55,9 @@ export default class MyPointsScreen extends Component{
                     leftComponent={{
                         icon: 'chevron-left',
                         color: '#fff',
-                        onPress: () => navigate('Home'),
+                        onPress: () => navigate('MyPoints'),
                     }}
-                    centerComponent={{text: 'Moje punkty', style: {color: 'white'}}}
+                    centerComponent={{text: this.state.company.name + " - kupony" , style: {color: 'white'}}}
                     rightComponent={{
                         icon: 'menu',
                         color: '#fff',
@@ -69,21 +70,21 @@ export default class MyPointsScreen extends Component{
                         dataSource={this.state.dataSource}
                         renderRow={
                             (rowData) =>
-                            <TouchableOpacity
-                                style={styles.rowView}
-                                onPress={() => {this.props.navigation.navigate("Company",{company: rowData})}}
-                            >
-                                <View style={{width: 50, alignSelf: 'flex-start'}}>
-                                    <Image
-                                        style={{width: 50, height: 50}}
-                                        source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
-                                    />
-                                </View>
-                                <View style={{paddingLeft: 5}}>
-                                    <Text style={styles.h2}>{rowData.name}</Text>
-                                    <Text style={styles.grayText}>{rowData.points} punktów</Text>
-                                </View>
-                            </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.rowView}
+                                    onPress={() => {this.props.navigation.navigate("Company",{id: rowData.id})}}
+                                >
+                                    <View style={{width: 50, alignSelf: 'flex-start'}}>
+                                        <Image
+                                            style={{width: 50, height: 50}}
+                                            source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
+                                        />
+                                    </View>
+                                    <View style={{paddingLeft: 5}}>
+                                        <Text style={styles.h2}>{rowData.description}</Text>
+                                        <Text style={styles.grayText}>{rowData.value} punktów</Text>
+                                    </View>
+                                </TouchableOpacity>
                         }
                     />
                 </View>
