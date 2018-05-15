@@ -76,7 +76,7 @@ export default class MyPointsScreen extends Component{
                                 <View style={{width: 50, alignSelf: 'flex-start'}}>
                                     <Image
                                         style={{width: 50, height: 50}}
-                                        source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
+                                        source={{uri: rowData.logo != null ? rowData.logo : 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
                                     />
                                 </View>
                                 <View style={{paddingLeft: 5}}>

@@ -3,6 +3,7 @@ import {
     StyleSheet,
     Text,
     View,
+    AsyncStorage
 } from 'react-native';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -20,12 +21,17 @@ export default class HomeScreen extends Component{
         this.state = {
             customer: {
                 id: 1,
-                firstname: '',
-                lastname: '',
             },
         };
-        this.getCustomerFromApiAsync(this)
-
+        AsyncStorage.getItem('customer')
+            .then((customer) => {
+                if (customer != null) {
+                    this.setState({customer: JSON.parse(customer)});
+                }
+                else {
+                    this.getCustomerFromApiAsync(this);
+                }
+            });
     }
 
     getCustomerFromApiAsync() {
@@ -40,6 +46,7 @@ export default class HomeScreen extends Component{
             .then((responseJson) => {
                 console.log(responseJson);
                 this.setState({customer: responseJson});
+                AsyncStorage.setItem('customer',JSON.stringify(responseJson));
             })
             .catch((error) => {
                 console.error(error);

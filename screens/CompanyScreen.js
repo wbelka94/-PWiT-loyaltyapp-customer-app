@@ -57,7 +57,7 @@ export default class CompanyScreen extends Component{
                         color: '#fff',
                         onPress: () => navigate('MyPoints'),
                     }}
-                    centerComponent={{text: this.state.company.name + " - kupony" , style: {color: 'white'}}}
+                    centerComponent={{text: this.state.company.name, style: {color: 'white'}}}
                     rightComponent={{
                         icon: 'menu',
                         color: '#fff',
@@ -72,17 +72,17 @@ export default class CompanyScreen extends Component{
                             (rowData) =>
                                 <TouchableOpacity
                                     style={styles.rowView}
-                                    onPress={() => {this.props.navigation.navigate("Company",{id: rowData.id})}}
+                                    onPress={() => {this.props.navigation.navigate("Coupon",{coupon: rowData, company: this.state.company})}}
                                 >
                                     <View style={{width: 50, alignSelf: 'flex-start'}}>
                                         <Image
                                             style={{width: 50, height: 50}}
-                                            source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
+                                            source={{uri: rowData.icon != null ? rowData.icon :  'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
                                         />
                                     </View>
                                     <View style={{paddingLeft: 5}}>
-                                        <Text style={styles.h2}>{rowData.description}</Text>
-                                        <Text style={styles.grayText}>{rowData.value} punktów</Text>
+                                        <Text style={styles.h2}>{rowData.title}</Text>
+                                        <Text style={styles.redText}>{rowData.value} punktów</Text>
                                     </View>
                                 </TouchableOpacity>
                         }
@@ -115,8 +115,8 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
     },
-    grayText:{
-        color: '#707070',
+    redText:{
+        color: 'red',
     }
 
 })
