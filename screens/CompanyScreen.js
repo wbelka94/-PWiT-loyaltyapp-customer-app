@@ -55,14 +55,14 @@ export default class CompanyScreen extends Component{
                     leftComponent={{
                         icon: 'chevron-left',
                         color: '#fff',
-                        onPress: () => navigate('MyPoints'),
+                        onPress: () => navigate('Home'),
                     }}
                     centerComponent={{text: this.state.company.name, style: {color: 'white'}}}
-                    rightComponent={{
-                        icon: 'menu',
-                        color: '#fff',
-                        onPress: () => this.props.navigation.openDrawer(),
-                    }}
+                    // rightComponent={{
+                    //     icon: 'menu',
+                    //     color: '#fff',
+                    //     onPress: () => this.props.navigation.openDrawer(),
+                    // }}
                     backgroundColor="#252525"/>
                 <View style={styles.mainContainer}>
                     <ListView

@@ -6,6 +6,7 @@ import createDrawerNavigator from "react-navigation/src/navigators/createDrawerN
 import CouponScreen from "./screens/CouponScreen";
 import QRScan from "./screens/QRScan";
 import {createBottomTabNavigator, createStackNavigator} from "react-navigation";
+import {Icon} from "react-native-elements";
 
 
 const MyPoints = createStackNavigator({
@@ -25,20 +26,31 @@ const MyPoints = createStackNavigator({
     initialRouteName: 'Home',
     drawerPosition: 'right',
     headerMode: 'none',
+
+    tabBarVisible: true,
+    tabBar: {
+        visible:true,
+        label: 'Moje punkty'},
     navigationOptions: {
+
         headerMode: 'none',
         headerVisible: false,
     }
 });
 
+MyPoints.navigationOptions = {
+    tabBarLabel: 'Moje punkty',
+    tabBarIcon: ({ tintColor }) => (<Icon type='material-community' name={'coins'} size={25}  color={tintColor}/>)
+}
+
 const App = createBottomTabNavigator ({
-    Home: {
-        path: '/home',
+    MyCard: {
+        path: '/my-card',
         screen: HomeScreen,
     },
     MyPoints: {
          path: '/home/my-points',
-         screen: MyPoints
+         screen: MyPoints,
     },
     QRScan: {
         screen: QRScan

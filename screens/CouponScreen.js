@@ -46,11 +46,11 @@ export default class CouponScreen extends Component{
                         onPress: () => navigate('Company',{company: this.state.company}),
                     }}
                     centerComponent={{text:  this.state.company.name + " - kupon" , style: {color: 'white'}}}
-                    rightComponent={{
-                        icon: 'menu',
-                        color: '#fff',
-                        onPress: () => this.props.navigation.openDrawer(),
-                    }}
+                    // rightComponent={{
+                    //     icon: 'menu',
+                    //     color: '#fff',
+                    //     onPress: () => this.props.navigation.openDrawer(),
+                    // }}
                     backgroundColor="#252525"/>
                 <View style={styles.mainContainer}>
                     <View

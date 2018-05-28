@@ -6,7 +6,7 @@ import {
     ListView, Image, TouchableOpacity,
 } from 'react-native';
 
-import {Header} from "react-native-elements";
+import {Header, Icon} from "react-native-elements";
 
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -14,6 +14,7 @@ const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 export default class MyPointsScreen extends Component{
     static navigationOptions = {
         title: 'Moje punkty',
+
     };
 
     constructor() {
@@ -51,21 +52,21 @@ export default class MyPointsScreen extends Component{
         return (
             <View style={styles.container}>
                 <Header
-                    leftComponent={{
-                        icon: 'chevron-left',
-                        color: '#fff',
-                        onPress: () => navigate('Home'),
-                    }}
+                    // leftComponent={{
+                    //     icon: 'chevron-left',
+                    //     color: '#fff',
+                    //     onPress: () => navigate('Home'),
+                    // }}
                     centerComponent={{text: 'Moje punkty', style: {color: 'white'}}}
-                    rightComponent={{
-                        icon: 'menu',
-                        color: '#fff',
-                        onPress: () => this.props.navigation.openDrawer(),
-                    }}
+
                     backgroundColor="#252525"/>
                 <View style={styles.mainContainer}>
                     <ListView
-                        style={styles.listView}
+                        style={styles.listView} // rightComponent={{
+                        //     icon: 'menu',
+                        //     color: '#fff',
+                        //     onPress: () => this.props.navigation.openDrawer(),
+                        // }}
                         dataSource={this.state.dataSource}
                         renderRow={
                             (rowData) =>

@@ -7,13 +7,14 @@ import {
 } from 'react-native';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {Header} from "react-native-elements";
+import {Header, Icon} from "react-native-elements";
 import QRCode from 'react-native-qrcode';
 
 export default class HomeScreen extends Component{
     static navigationOptions = {
         title: 'Moja karta',
         tabBarLabel: 'Moja karta',
+        tabBarIcon: ({ tintColor }) => (<Icon type='MaterialIcons' name={'card-giftcard'} size={25}  color={tintColor}/>)
     };
 
     constructor(){
@@ -58,11 +59,11 @@ export default class HomeScreen extends Component{
             <View style={styles.container}>
                 <Header
                     centerComponent={{text: 'Moja karta', style: {color: 'white'}}}
-                    rightComponent={{
-                        icon: 'menu',
-                        color: '#fff',
-                        onPress: () => this.props.navigation.openDrawer(),
-                    }}
+                    // rightComponent={{
+                    //     icon: 'menu',
+                    //     color: '#fff',
+                    //     onPress: () => this.props.navigation.openDrawer(),
+                    // }}
                     backgroundColor="#252525"/>
                 <View style={styles.mainContainer}>
                     <QRCode

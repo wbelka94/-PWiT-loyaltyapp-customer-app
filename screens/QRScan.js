@@ -11,8 +11,14 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { BarCodeScanner, Permissions } from 'expo';
+import {Icon} from "react-native-elements";
 
 export default class QRScan extends Component {
+    static navigationOptions = {
+        tabBarLabel: 'QR scan',
+        tabBarIcon: ({ tintColor }) => (<Icon type='MaterialIcons' name={'qrcode-scan'} size={25} color={tintColor}/>)
+    }
+
     state = {
         hasCameraPermission: null,
         lastScannedUrl: null,
