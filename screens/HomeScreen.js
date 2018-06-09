@@ -3,7 +3,7 @@ import {
     StyleSheet,
     Text,
     View,
-    AsyncStorage
+    AsyncStorage, TouchableOpacity
 } from 'react-native';
 
 import {Header, Icon} from "react-native-elements";
@@ -65,6 +65,13 @@ export default class HomeScreen extends Component{
                             fontWeight: 'bold'
                         }
                     }}
+                    rightComponent={
+                        <TouchableOpacity
+                            onPress={()=>{this.props.navigation.navigate("SignIn")}}
+                        >
+                            <Icon type='material-community' name={'logout'} size={25} color={'white'}/>
+                        </TouchableOpacity>
+                    }
                     backgroundColor="#FF0000"/>
                 <View style={styles.mainContainer}>
                     <QRCode
@@ -86,7 +93,7 @@ export default class HomeScreen extends Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
+        backgroundColor: 'white',
     },
     mainContainer: {
         flex: 1,

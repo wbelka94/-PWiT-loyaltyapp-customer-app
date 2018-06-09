@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import HomeScreen from "./screens/HomeScreen";
 import MyPointsScreen from "./screens/MyPointsScreen";
 import CompanyScreen from "./screens/CompanyScreen";
@@ -7,6 +7,7 @@ import CouponScreen from "./screens/CouponScreen";
 import QRScan from "./screens/QRScan";
 import {createBottomTabNavigator, createStackNavigator} from "react-navigation";
 import {Icon} from "react-native-elements";
+import SignInScreen from "./screens/SignInScreen";
 
 
 const MyPoints = createStackNavigator({
@@ -57,6 +58,21 @@ const App = createBottomTabNavigator ({
     }
 });
 
+const SignedOut = createStackNavigator({
+    SignIn: {
+        screen: SignInScreen,
+    },
+    App: {
+        screen: App
+    }
+},{
+    initialRouteName: 'SignIn',
+    drawerPosition: 'right',
+    headerMode: 'none',
+    navigationOptions: {
+        headerMode: 'none',
+        headerVisible: false,
+    }
+});
 
-
-export default App;
+export default SignedOut;

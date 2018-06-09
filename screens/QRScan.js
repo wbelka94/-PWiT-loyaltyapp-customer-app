@@ -16,7 +16,7 @@ import {Icon} from "react-native-elements";
 export default class QRScan extends Component {
     static navigationOptions = {
         tabBarLabel: 'QR scan',
-        tabBarIcon: ({ tintColor }) => (<Icon type='MaterialIcons' name={'qrcode-scan'} size={25} color={tintColor}/>)
+        tabBarIcon: ({ tintColor }) => (<Icon type='material-community' name={'qrcode-scan'} size={25} color={tintColor}/>)
     }
 
     state = {
