@@ -24,6 +24,8 @@ export default class CompanyScreen extends Component{
             company: props.navigation.state.params.company,
             dataSource: ds.cloneWithRows([])
         };
+
+        this.getCompanyFromApiAsync();
         this.getCouponsForCompanyFromApiAsync();
     }
 
@@ -45,6 +47,24 @@ export default class CompanyScreen extends Component{
             });
     }
 
+    getCompanyFromApiAsync() {
+        return fetch('http://loyaltyapp.fb-chn.pl/companies?filter[id]=' + this.state.company.id+"&customer=1", {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+                this.setState({company: responseJson[0]});
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
 
 
     render(){
@@ -57,21 +77,27 @@ export default class CompanyScreen extends Component{
                         color: '#fff',
                         onPress: () => navigate('Home'),
                     }}
-                    centerComponent={{text: this.state.company.name, style: {color: 'white'}}}
-                    // rightComponent={{
-                    //     icon: 'menu',
-                    //     color: '#fff',
-                    //     onPress: () => this.props.navigation.openDrawer(),
-                    // }}
-                    backgroundColor="#252525"/>
+                    centerComponent={{
+                        text: this.state.company.name,
+                        style: {
+                            color: 'white',
+                            fontSize: 20,
+                            fontWeight: 'bold'
+                        }
+                    }}
+                    backgroundColor="#ff0000"/>
                 <View style={styles.mainContainer}>
+                    <View style={styles.companyInfoContainer}>
+                        <Text style={styles.companyInfoContainerText}>Pula punktów: {this.state.company.points}</Text>
+                    </View>
+                    <Text>{this.state.dataSource.getRowCount() === 0 ? 'Brak kuponów' : ''}</Text>
                     <ListView
                         style={styles.listView}
                         dataSource={this.state.dataSource}
                         renderRow={
                             (rowData) =>
                                 <TouchableOpacity
-                                    style={styles.rowView}
+                                    style={this.state.company.points >= rowData.value ? styles.rowView : styles.rowViewDisabled}
                                     onPress={() => {this.props.navigation.navigate("Coupon",{coupon: rowData, company: this.state.company})}}
                                 >
                                     <View style={{width: 50, alignSelf: 'flex-start'}}>
@@ -100,11 +126,20 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         alignItems: 'center',
+        backgroundColor: 'white',
     },
     listView:{
         width: '100%',
     },
     rowView:{
+        width: '100%',
+        padding: 5,
+        borderBottomWidth: 0.5,
+        borderColor: '#252525',
+        flexDirection: 'row',
+    },
+    rowViewDisabled: {
+        backgroundColor: 'gray',
         width: '100%',
         padding: 5,
         borderBottomWidth: 0.5,
@@ -117,6 +152,17 @@ const styles = StyleSheet.create({
     },
     redText:{
         color: 'red',
+    },
+    companyInfoContainer:{
+        borderBottomWidth: 2,
+        borderColor: 'black',
+        borderStyle: 'solid',
+        width: '100%',
+        padding: 5,
+    },
+    companyInfoContainerText: {
+        fontSize: 20,
+        fontWeight: 'bold',
     }
 
 })

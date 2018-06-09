@@ -6,7 +6,6 @@ import {
     AsyncStorage
 } from 'react-native';
 
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Header, Icon} from "react-native-elements";
 import QRCode from 'react-native-qrcode';
 
@@ -58,13 +57,15 @@ export default class HomeScreen extends Component{
         return (
             <View style={styles.container}>
                 <Header
-                    centerComponent={{text: 'Moja karta', style: {color: 'white'}}}
-                    // rightComponent={{
-                    //     icon: 'menu',
-                    //     color: '#fff',
-                    //     onPress: () => this.props.navigation.openDrawer(),
-                    // }}
-                    backgroundColor="#252525"/>
+                    centerComponent={{
+                        text: 'Moja karta',
+                        style: {
+                            color: 'white',
+                            fontSize: 20,
+                            fontWeight: 'bold'
+                        }
+                    }}
+                    backgroundColor="#FF0000"/>
                 <View style={styles.mainContainer}>
                     <QRCode
                         style={styles.QRCode}

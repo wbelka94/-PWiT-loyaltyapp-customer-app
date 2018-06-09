@@ -36,9 +36,20 @@ export default class QRScan extends Component {
     };
 
     _handleBarCodeRead = result => {
-        if (result.data !== this.state.lastScannedUrl) {
+        this.setState({ lastScannedUrl: null});
+        try {
+            var json = JSON.parse(result.data);
+        }
+        catch (e) {
+            alert("QR kod nie zawiera odpowiednich danych");
+            return;
+        }
+        if (json && json.company) {
             LayoutAnimation.spring();
-            this.setState({ lastScannedUrl: result.data });
+            this.props.navigation.navigate("Company",{company: {id: json.company}});
+        }
+        else{
+            alert("QR kod nie zawiera odpowiednich danych");
         }
     };
 

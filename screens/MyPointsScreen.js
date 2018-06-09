@@ -6,7 +6,7 @@ import {
     ListView, Image, TouchableOpacity,
 } from 'react-native';
 
-import {Header, Icon} from "react-native-elements";
+import {Header, Icon, SearchBar } from "react-native-elements";
 
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -47,26 +47,52 @@ export default class MyPointsScreen extends Component{
             });
     }
 
+    search(value){
+        console.log("searching");
+        if(value == ""){
+            return this.getPointsByCompanyFromApiAsync();
+        }
+        return fetch('http://loyaltyapp.fb-chn.pl/companies?filter[name]='+value+"&customer="+this.state.customer.id, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+                this.setState({dataSource: ds.cloneWithRows(responseJson)});
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
     render(){
         const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
                 <Header
-                    // leftComponent={{
-                    //     icon: 'chevron-left',
-                    //     color: '#fff',
-                    //     onPress: () => navigate('Home'),
-                    // }}
-                    centerComponent={{text: 'Moje punkty', style: {color: 'white'}}}
-
-                    backgroundColor="#252525"/>
+                    centerComponent={{
+                        text: 'Moje punkty',
+                        style: {
+                            color: 'white',
+                            fontSize: 20,
+                            fontWeight: 'bold'
+                        }
+                    }}
+                    backgroundColor="#FF0000"/>
+                <SearchBar
+                    containerStyle={styles.searchBar}
+                    onChangeText={this.search.bind(this)}
+                    showLoading
+                    lightTheme
+                    platform={'android'}
+                    placeholder='Wyszukaj' />
                 <View style={styles.mainContainer}>
                     <ListView
-                        style={styles.listView} // rightComponent={{
-                        //     icon: 'menu',
-                        //     color: '#fff',
-                        //     onPress: () => this.props.navigation.openDrawer(),
-                        // }}
+                        style={styles.listView}
                         dataSource={this.state.dataSource}
                         renderRow={
                             (rowData) =>
@@ -96,6 +122,7 @@ export default class MyPointsScreen extends Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: 'white'
     },
     mainContainer: {
         flex: 1,
@@ -117,6 +144,11 @@ const styles = StyleSheet.create({
     },
     grayText:{
         color: '#707070',
+    },
+    searchBar:{
+        width: '100%',
+        backgroundColor: 'white',
+        borderWidth: 0
     }
 
 })

@@ -24,6 +24,11 @@ export default class CouponScreen extends Component{
                 id: 0,
             }
         };
+        this.state.QRCode = {
+            customer: this.state.customer.id,
+            coupon: this.state.coupon.id,
+            company: this.state.company.id,
+        }
         AsyncStorage.getItem('customer').then(
             (customer) => {
                 this.setState({customer: JSON.parse(customer)});
@@ -45,13 +50,16 @@ export default class CouponScreen extends Component{
                         color: '#fff',
                         onPress: () => navigate('Company',{company: this.state.company}),
                     }}
-                    centerComponent={{text:  this.state.company.name + " - kupon" , style: {color: 'white'}}}
-                    // rightComponent={{
-                    //     icon: 'menu',
-                    //     color: '#fff',
-                    //     onPress: () => this.props.navigation.openDrawer(),
-                    // }}
-                    backgroundColor="#252525"/>
+                    centerComponent={{
+                        text:  this.state.company.name + " - kupon" ,
+                        style: {
+                            color: 'white',
+                            fontSize: 20,
+                            fontWeight: 'bold'
+                        }
+                    }}
+
+                    backgroundColor="#ff0000"/>
                 <View style={styles.mainContainer}>
                     <View
                         style={styles.rowView}
@@ -75,7 +83,7 @@ export default class CouponScreen extends Component{
                     </View>
                     <QRCode
                         style={styles.QRCode}
-                        value={"{customer: "+this.state.customer.id+", coupon:"+this.state.coupon.id+"}"}
+                        value={JSON.stringify(this.state.QRCode)}
                         size={200}
                         bgColor='black'
                         fgColor='white'/>
@@ -94,6 +102,7 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         alignItems: 'center',
+        backgroundColor: 'white',
     },
     listView:{
         width: '100%',
