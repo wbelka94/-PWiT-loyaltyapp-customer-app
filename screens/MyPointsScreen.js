@@ -3,7 +3,7 @@ import {
     StyleSheet,
     Text,
     View,
-    ListView, Image, TouchableOpacity,
+    ListView, Image, TouchableOpacity, AsyncStorage,
 } from 'react-native';
 
 import {Header, Icon, SearchBar } from "react-native-elements";
@@ -22,11 +22,20 @@ export default class MyPointsScreen extends Component{
 
         this.state = {
             customer:{
-                id: 1,
+                id: 0,
             },
             dataSource: ds.cloneWithRows([])
         };
-        this.getPointsByCompanyFromApiAsync();
+        AsyncStorage.getItem('customer')
+            .then((customer) => {
+                if (customer != null) {
+                    this.setState({customer: JSON.parse(customer)});
+                }
+                else {
+                    this.getCustomerFromApiAsync(this);
+                }
+                this.getPointsByCompanyFromApiAsync();
+            });
     }
 
     getPointsByCompanyFromApiAsync() {
@@ -108,7 +117,7 @@ export default class MyPointsScreen extends Component{
                                 </View>
                                 <View style={{paddingLeft: 5}}>
                                     <Text style={styles.h2}>{rowData.name}</Text>
-                                    <Text style={styles.grayText}>{rowData.points} punktów</Text>
+                                    <Text style={styles.grayText}>{rowData.points != null ? rowData.points : '0'} punktów</Text>
                                 </View>
                             </TouchableOpacity>
                         }

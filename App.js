@@ -8,6 +8,7 @@ import QRScan from "./screens/QRScan";
 import {createBottomTabNavigator, createStackNavigator} from "react-navigation";
 import {Icon} from "react-native-elements";
 import SignInScreen from "./screens/SignInScreen";
+import SignUpScreen from "./screens/SignUpScreen";
 
 
 const MyPoints = createStackNavigator({
@@ -61,6 +62,9 @@ const App = createBottomTabNavigator ({
 const SignedOut = createStackNavigator({
     SignIn: {
         screen: SignInScreen,
+    },
+    SignUp: {
+        screen: SignUpScreen,
     },
     App: {
         screen: App

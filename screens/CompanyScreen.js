@@ -3,7 +3,7 @@ import {
     StyleSheet,
     Text,
     View,
-    ListView, Image, TouchableOpacity,
+    ListView, Image, TouchableOpacity, AsyncStorage,
 } from 'react-native';
 
 import {Header} from "react-native-elements";
@@ -24,9 +24,19 @@ export default class CompanyScreen extends Component{
             company: props.navigation.state.params.company,
             dataSource: ds.cloneWithRows([])
         };
+        AsyncStorage.getItem('customer').then(
+            (customer) => {
+                this.setState({customer: JSON.parse(customer)});
+                console.log("loading customer from asyncStorage");
+                console.log(this.state.customer);
+            }
+        ).then(() => {
+            this.getCompanyFromApiAsync();
+            this.getCouponsForCompanyFromApiAsync();
+        }).catch((error) => {
+            console.error(error);
+        });
 
-        this.getCompanyFromApiAsync();
-        this.getCouponsForCompanyFromApiAsync();
     }
 
     getCouponsForCompanyFromApiAsync() {
@@ -48,7 +58,7 @@ export default class CompanyScreen extends Component{
     }
 
     getCompanyFromApiAsync() {
-        return fetch('http://loyaltyapp.fb-chn.pl/companies?filter[id]=' + this.state.company.id+"&customer=1", {
+        return fetch('http://loyaltyapp.fb-chn.pl/companies?filter[id]=' + this.state.company.id+"&customer="+this.state.customer.id, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

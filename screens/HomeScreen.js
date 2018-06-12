@@ -34,24 +34,12 @@ export default class HomeScreen extends Component{
             });
     }
 
-    getCustomerFromApiAsync() {
-        return fetch('http://loyaltyapp.fb-chn.pl/customers/' + this.state.customer.id, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(responseJson);
-                this.setState({customer: responseJson});
-                AsyncStorage.setItem('customer',JSON.stringify(responseJson));
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+    signOut(){
+        AsyncStorage.removeItem("customer").then(() => {
+            this.props.navigation.navigate("SignIn");
+        });
     }
+
 
     render(){
         return (
@@ -67,7 +55,7 @@ export default class HomeScreen extends Component{
                     }}
                     rightComponent={
                         <TouchableOpacity
-                            onPress={()=>{this.props.navigation.navigate("SignIn")}}
+                            onPress={this.signOut.bind(this)}
                         >
                             <Icon type='material-community' name={'logout'} size={25} color={'white'}/>
                         </TouchableOpacity>
